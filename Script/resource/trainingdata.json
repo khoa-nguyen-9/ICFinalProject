@@ -1,0 +1,333 @@
+{
+  "add" : {
+    "doc" : {
+      "id" : 1,
+      "body" : "Transcriptional activation of the MET gene network, which includes MET28, requires at least five positive trans-acting factors: Cbf1p, Met4p, Met28p, Met31p, and Met32p (2, 3)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 2,
+      "body" : "Glucose repression of REG2 is partially dependent on Mig1p and Mig2p (4), and induction of REG2 expression during the diauxic shift is dependent on Cat8p (5)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 3,
+      "body" : "When phosphate is depleted, Pho4p, a basic helix-loop-helix transcription factor, and Pho2p, a homeodomain protein, act cooperatively to bind the PHO5 promoter and activate PHO5 transcription (4, 3)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 4,
+      "body" : "PHO2, also known as BAS2 or GRF10, encodes a homeodomain transcriptional activator that activates transcription in a combinatorial manner (6,5). Pho2p is required to express genes in several different pathways such as purine nucleotide biosynthesis, histidine biosynthesis, and phosphate utilization (7). Genes that are known to be regulated by Pho2p include PHO5, PHO81, HIS4, CYC1, TRP4, HO, ADE1, ADE2, ADE5,7 and ADE8 (4)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 5,
+      "body" : "On non-fermentable carbon sources, GUT1 transcription is upregulated by the transcriptional activators Adr1p, Ino2p, and Ino4p (2)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 6,
+      "body" : "Conversely, the negative regulator Opi1p facilitates GUT1 repression (2, 6)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 7,
+      "body" : "Under glucose-repressing conditions, the Mig1p-Cyc8p-Tup1p complex binds directly to the SUC2 promoter, which is packaged into an array of evenly positioned nucleosomes. Several other factors contribute to the repression of SUC2, including Hxk2p (which also binds the SUC2 promoter), Grr1p, Reg1p, Glc7p and Gcr1p."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 8,
+      "body" : "Several other factors contribute to the repression of SUC2, including Hxk2p (which also binds the SUC2 promoter), Grr1p, Reg1p, Glc7p and Gcr1p."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 9,
+      "body" : "Bas1p has been shown to bind to a site containing a TGACTC hexanucleotide found in the ADE2 and ADE5,7 promoters (9)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 10,
+      "body" : "Under nitrogen-rich conditions, downregulation of GAT1 transcription is mediated by the repressor Dal80p (1)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 11,
+      "body" : "MDJ1 expression is upregulated upon heat shock via binding of the transcription factor Hsf1p to a non-canonical heat shock element present in the MDJ1 promoter (12)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 12,
+      "body" : "Adr1p was first identified as a transcription factor mediating expression of the alcohol dehydrogenase gene ADH2 (1), but it is now known to also activate genes involved glucose"
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 13,
+      "body" : "IZH1, IZH2, and IZH4 are also induced by fatty acids via the Oaf1p/Pip2p complex that binds to oleate response elements (OREs)"
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 14,
+      "body" : "Transcriptional repression of ANB1 under aerobic conditions is mediated by the transcription factors Rox1p and Mot3p, which cooperate to recruit the Cyc8p-Tup1p general co-repressor complex to the ANB1 promoter (17, 18, 19)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 15,
+      "body" : "Transcription of MET17 is mainly regulated by the transcription factors of the sulfur metabolic network; it is positively regulated by Met4p and Cbf1p and negatively regulated by Met31p and Met32p (10, 11, 12, 13)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 16,
+      "body" : "MET17 expression can also be regulated by Gcn4p, Cbf1p, and Sir4p (14, 15, 16, 17)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 17,
+      "body" : "Expression of ADE13 and most of the other purine biosynthetic genes is repressed by adenine and activated by transcription factors Bas1p and Pho2p (7, 4)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 18,
+      "body" : "Transcriptional regulation is effected through consensus sequences in the FBP1 promoter region for the repressor Mig1p, the activating HAP complex, and the derepressing zinc finger protein Cat8p (10, reviewed in 6)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 19,
+      "body" : "FET3 and FTR1 are induced by Aft1p"
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 20,
+      "body" : "Copper also induces transcription of FET3 and FTR1 via Aft1p (26),"
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 21,
+      "body" : "Under conditions in which glucose is plentiful, expression of CAT8 is repressed by the DNA binding protein Mig1p, which recruits the repressor complex Ssn6p-Tup1p and binds to a site in the CAT8 promoter (1, 12)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 22,
+      "body" : "Bas1p binds several ADE promoters (ADE1, ADE2, ADE4, and ADE5,7) and DNA-bound Bas1p recruits Pho2p to activate ADE genes in S. cerevisiae (6)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 23,
+      "body" : "Expression of ADE4, and of other genes in the yeast ADE regulon, is repressed by the presence of purine bases and derepressed in the absence of purines through the action of transcription factors such as Bas1p, Pho2p, and Gcn4p (6, 7)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 24,
+      "body" : "Transcription of FET4 is induced by Aft1p"
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 25,
+      "body" : "Rox1p attenuates the activation of FET4 by Aft1p or Zap1p (5)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 26,
+      "body" : "Expression of ADE12 and most of the other purine biosynthetic genes is repressed by adenine and activated by transcription factors Bas1p and Pho2p (8, 9)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 27,
+      "body" : "PUT4 downregulation by NCR is mediated by the transcription factors Ure2p and Dal80p (2, 15, 16)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 28,
+      "body" : "PUT4 downregulation by NCR is mediated by the transcription factors Ure2p and Dal80p (2, 15, 16). In the presence of proline and the absence of a preferred nitrogen source, NCR is released by the transcriptional activator Gln3p and the co-activator Hfi1p (16, 17)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 29,
+      "body" : "The regulation of CAR1 expression is complex, as the CAR1 promoter region contains one upstreamThe regulation of CAR1 expression is complex, as the CAR1 promoter region contains one upstream repression site (URS) and four upstream activation sites (UAS) (17). The URS is bound by the global repressor Ume6p, which forms a complex with Sin3p and Rpd3p that downregulates CAR1 expression (18)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 30,
+      "body" : "The regulation of CAR1 expression is complex, as the CAR1 promoter region contains one upstream repression site (URS) and four upstream activation sites (UAS) (17). The URS is bound by the global repressor Ume6p, which forms a complex with Sin3p and Rpd3p that downregulates CAR1 expression (18). This repression is opposed by the global transcriptional activators Abf1p and Rap1p that bind two of the four UASs (19, 20)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 31,
+      "body" : "In the presence of arginine and the absence of a preferred nitrogen source NCR is released, and the GATA transcriptional activators Gln3p and Gat1p bind to the fourth UAS, upregulating CAR1 expression (21, 24, 17)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 32,
+      "body" : "Both CLB5 and CLB6 promoters contain MCB (MluI cell cycle box) motifs, which are elements found in several DNA synthesis genes. The transcriptional activator MBF (MCB-binding factor), which is comprised of the Mbp1 and Swi6 proteins, bind to the MCB elements to activate transcription (5)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 33,
+      "body" : "Transcription of UPR target genes also involves the SAGA histone acetyltransferase complex (comprising Gcn5p, Hfi1p, Ada2p, Ngg1p, Spt20p, Spt3p, and Spt7p); Gcn5p interacts physically with Ire1p (17, 5, 6)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 34,
+      "body" : "Ada2p is a transcriptional coactivator, also found in ADA, SAGA, and SLIK/SALSA, whose presence enhances Gcn5p HAT activity (24, 26)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 35,
+      "body" : "Adr1p also contains four transcriptional activation domains (amino acids 76-172, 263-359, 420-462, 642-704, respectively) that are functionally redundant and interact with transcription factors such as Sua7p, TFIID, Ada2p, and Gcn5p (11, 12, 13)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 36,
+      "body" : "Transcription of CSM4 in haploid cells is dependent on Adr1p, a global transcription factor that acts during glucose depletion in cooperation with Cat8p (6, 7)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 37,
+      "body" : "Two cis-acting elements in the ADH2 promoter, UAS1 (upstream activation site) and UAS2/CSRE (carbon-source responsive element), are both necessary for maximal ADH2 expression (13, 16). In the absence of a fermentable carbon source, these sites are bound cooperatively by the transcriptional activators Adr1p and Cat8p (16); Adr1p binds to the UAS1 site while Cat8p binds to the UAS2/CSRE site (13, 17, 18)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 38,
+      "body" : "Transcription of CTA1 is regulated in response to oleic acid, glucose, heme, and oxygen, (12, 13, 14). This transcriptional response is mediated by the transcriptional activators Adr1p, Oaf1p, Rtg1p, and Rtg2p via binding to overlapping ORE and UAS1 elements in the CTA1 promoter (15, 16 and references therein)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 39,
+      "body" : "PEX1 expression is induced by growth on oleic acid, upregulated during anaerobiosis, and positively regulated by proteins involved in depression of glucose-repressible genes including the transcriptional activator Adr1p, the protein kinase Snf1p, and its activating subunit Snf4p (8, 17, 18, 6)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 40,
+      "body" : "CCC2 expression is regulated by iron and AFT1 (17)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 41,
+      "body" : "An upstream repression site in the CAR2 promoter is bound by the global repressor Ume6p, which forms a complex with Sin3p and Rpd3p that downregulates CAR2 expression (12)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 42,
+      "body" : "Arg82p is involved in regulating this process by stabilizing the transcription factors Mcm1p and Arg80p (13, 4)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 43,
+      "body" : "Pho2p and Pho4p cooperatively bind to the promoter site of PHO5 (which encodes for a secreted acid phosphatase) and are required for PHO5 expression when cells are starved of phosphate (10)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 44,
+      "body" : "UME6 (Unscheduled Meiotic gene Expression) is a key transcriptional regulator of early meiotic genes, such as SPO11, SPO13, and IME2 (15)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 45,
+      "body" : "SIR1 is one of four Silent Information Regulator genes in yeast. It encodes a nuclear protein that helps silence transcription of the cryptic mating type loci HML and HMR (1, 4, 5)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 46,
+      "body" : "Silencing at HML and HMR depends on the presence of a regulatory chromosomal domain that contains binding sites for such multifunctional nuclear proteins as the Origin Recognition Complex (ORC), Abf1p, and Rap1p, which are in turn thought to be recognized by silencing-specific proteins such as Sir1p, Sir2p, Sir3p, and Sir4p (10, 11, 5)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 47,
+      "body" : "RAP1 (Repressor Activator Protein) encodes an essential protein involved in many diverse, some seemingly contradictory, processes in S. cerevisiae, including telomere maintenance, transcriptional silencing (repression) of the silent mating loci HML and HMR, and high level transcriptional activation of genes encoding ribosomal proteins and glycolytic enzymes (1, 9, 10, 7)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 48,
+      "body" : "Rap1p is known to be required for the transcription of several non-ribosomal protein genes, including HIS4 (14), ENO1 and ENO2 (15), and is implicated in transcriptional regulation of 185 additional genes (7)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 49,
+      "body" : "In addition, HCM1 drives the expression of FKH1, FKH2, and NDD1, M-phase specific transcription factors required for the subsequent temporal wave of cell cycle regulated transcription, and two cell cycle specific transcriptional repressors, WHI5 and YHP1 (3)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 50,
+      "body" : "HCM1 was originally identified as a high-copy number suppressor of a calmodulin (CMD1) mutant with a specific defect in the assembly of the spindle pole body (SPB) and was later found to regulate the expression of SPC110, a gene that encodes a calmodulin binding protein and SPB component (1, 4)"
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 51,
+      "body" : "Snf11p is a component of the SWI/SNF complex, and can function as a transcriptional activator in genetic assays (1, 6)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 52,
+      "body" : "Snf5p is required for the normal expression of all histone genes, including HTA1 and HTB1 (21)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 53,
+      "body" : "The function of Met32p during the transcriptional regulation of the sulfur network varies, however, from one gene to another, as it seems to act as a negative trans-regulatory factor at the MET17 promoter region, but as an essential positive effector at the MET3, MET14, and MET30 promoter regions (1, 8, 7)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 54,
+      "body" : "Pdr3p also participates in other processes that do not involve Pdr1p, such as retrograde response signaling (15, 16), as well as regulating the DNA damage-inducible genes MAG1 and DDI1 (17)."
+    }
+  },
+  "add" : {
+    "doc" : {
+      "id" : 55,
+      "body" : "PDR1 and PDR3 encode zinc finger transcription factors that are regulators of the pleiotropic drug response in S. cerevisiae. Pdr1p and Pdr3p are 36% identical in amino acid composition (5) and can form homodimers or heterodimers (6). Pdr1p and Pdr3p serve as both transcriptional activators and repressors by binding to pleiotropic drug response elements (PDREs) present in the promoters of target genes involved in multidrug resistance (reviewed in 7, 8, and 9). A key feature of the PDRE consensus sequence, 5'-TCCGCGGA-3', is the presence of CGG triplets in an everted repeat orientation (10) and both Pdr1p and Pdr3p constitutively occupy both perfect and degenerate PDREs (6). These two factors have overlapping but not identical sets of target genes and the individual effect on any given shared target gene can also differ (11, 12 and references therein). This variation in regulatory ability may be due either to differences in post-translational modification or heterodimer formation with other transcriptional factors such as Rdr1p and Stb5p (13, 4). Targets include the ABC transporters encoded by PDR5, PDR10, PDR15, SNQ2, and YOR1, the hexose transporter genes HXT9 and HXT11, and sphingolipid biosynthetic genes such as IPT1 (14, and reviewed in 9)."
+    }
+  },
+  "commit" : { }
+}

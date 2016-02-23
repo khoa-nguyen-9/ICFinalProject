@@ -1,0 +1,9 @@
+curl -X POST -H "Content-Type: application/json" -u "783c5984-daa9-4334-93d6-ac6f87c0b4d7":"uegcY7FvU5gz" "https://gateway.watsonplatform.net/retrieve-and-rank/api/v1/solr_clusters/sc8864bebe_b5f1_45c5_8428_a43b53bf9212/solr/yeast-sample-collection/update" --data-binary @resource/trainingdata.json
+
+python ./train.py -u 783c5984-daa9-4334-93d6-ac6f87c0b4d7:uegcY7FvU5gz -i resource/yeastfag4.csv -c sc8864bebe_b5f1_45c5_8428_a43b53bf9212 -x yeast-sample-collection -n example-ranker4
+
+curl -u "783c5984-daa9-4334-93d6-ac6f87c0b4d7":"uegcY7FvU5gz"  "https://gateway.watsonplatform.net/retrieve-and-rank/api/v1/rankers/42B250x11-rank-696"
+
+https://783c5984-daa9-4334-93d6-ac6f87c0b4d7:uegcY7FvU5gz@gateway.watsonplatform.net/retrieve-and-rank/api/v1/solr_clusters/sc8864bebe_b5f1_45c5_8428_a43b53bf9212/solr/yeast-sample-collection/select?q=What is the target of Aft1p&wt=json&fl=id,body
+
+https://783c5984-daa9-4334-93d6-ac6f87c0b4d7:uegcY7FvU5gz@gateway.watsonplatform.net/retrieve-and-rank/api/v1/solr_clusters/sc8864bebe_b5f1_45c5_8428_a43b53bf9212/solr/example-collection/fcselect?ranker_id=42AF7Ex10-rank-973&q=What is regulator of PHO5&wt=json&fl=id,body
