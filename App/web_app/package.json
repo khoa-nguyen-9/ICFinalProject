@@ -1,0 +1,31 @@
+{
+  "name": "ICFinalProject",
+  "version": "0.1.0",
+  "description": "Final project web application",
+  "engines": {
+    "node": ">=0.10.38"
+  },
+  "repository": {
+  },
+  "author": "Khoa Nguyen",
+  "license": "Apache-2.0",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "body-parser": "~1.14.1",
+    "cookie-parser": "^1.4.0",
+    "csurf": "^1.8.3",
+    "ejs": "^2.3.4",
+    "errorhandler": "~1.4.1",
+    "express": "~4.13.3",
+    "express-rate-limit": "^2.0.2",
+    "express-secure-only": "^0.2.1",
+    "find-remove": "^0.2.8",
+    "helmet": "^0.15.0",
+    "multer": "^1.1.0",
+    "multiparty": "~4.1.2",
+    "serve-favicon": "~2.3.0",
+    "watson-developer-cloud": "^1.1.0"
+  }
+}
