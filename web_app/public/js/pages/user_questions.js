@@ -60,6 +60,14 @@ $(document).ready(function() {
               labels.push(label);  
             }
           }
+          if (labels.length == 0) {
+            var label = {
+              id : 1,
+              rank : 1
+            }
+
+            labels.push(label);
+          }
           var newRank = {
             question : question,labels : labels
           }
@@ -80,6 +88,11 @@ $(document).ready(function() {
 
     var top = document.getElementById('choose-output-format').offsetTop;
     window.scrollTo(0, top);
+
+    $('.endSessionButton').click(function() {
+      $.post('/createRanker',{}, function(data){
+      });
+    });
 
   });
 

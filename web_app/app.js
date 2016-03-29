@@ -112,6 +112,13 @@ app.get('/user', function(req, res) {
 });
 
 /*
+ * Create end session page
+ */
+app.get('/endsession', function(req, res) {
+  res.render('endsession', { ct: req._csrfToken });
+});
+
+/*
  * Create upload page
  */
 app.get('/upload', function(req, res) {
@@ -147,27 +154,6 @@ app.get('/api/getgenes', function(req, res) {
  */
 app.get('/api/getresult', function(req, res) {
   var question = req.query.question;
-  // var url = "https://f7213345-5d80-4e5c-850f-712dec73b6d6:CCSLbDnHpJXG@gateway.watsonplatform.net/retrieve-and-rank/api/v1/" 
-  // + "solr_clusters/scb567fb0f_0dd0_4c23_a773_872cf686e784/solr/yeast_sample_collection/"
-  // + "select?q=" + question + "&wt=json&fl=id,body";
-  // //+ "fcselect?ranker_id=42AF7Ex10-rank-1028&q=What is regulator of FBP1&wt=json&fl=id,body";
-  // request({
-  //   url: url,
-  //   json: true
-  // }, function (error, response, body) {
-  //   var sampleResult = [];
-  //   if (!error && response.statusCode === 200) {
-  //     for(var i = 0; i < body.response.docs.length;i++){
-  //       var result = {
-  //         id : body.response.docs[i].id,
-  //         body : body.response.docs[i].body[0]
-  //       };
-  //       sampleResult.push(result);
-  //     }
-  //   }
-  //   res.send(sampleResult);
-  // })
-
   //var ranker_id = '868fedx13-rank-337';
   retrieve_and_rank.listRankers({},
   function(err, response) {
@@ -177,7 +163,7 @@ app.get('/api/getresult', function(req, res) {
       response.rankers.sort(function(a,b){
         return new Date(b.created) - new Date(a.created);
       });
-      var i = 0;
+      var i = response.rankers.length-1;
       //for(var i = 0; i<response.rankers.length; i++) {
         var params = {
           ranker_id: response.rankers[i].ranker_id,
@@ -252,8 +238,6 @@ app.post('/updategt',function(req,res){
     var record = [];
     record.push(updates[i].question);
     var labels = updates[i].labels;
-    console.log(updates[i].question);
-    console.log(labels);
     for (var j = 0; j < labels.length; j++) {
       record.push(labels[j].id);
       record.push(labels[j].rank);

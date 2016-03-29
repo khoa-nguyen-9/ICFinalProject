@@ -10,7 +10,6 @@ $(document).ready(function() {
   var output_format = $(this).attr('data-attr');
   var output_type = $(this).attr('data-type');
   var count = localStorage.getItem("count");
-  alert(count);
   if (count == null) {count = 0};
   
   $.get( '/api/getgtdata',{}, function(gtdata) {
