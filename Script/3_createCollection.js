@@ -1,14 +1,14 @@
 var watson = require('watson-developer-cloud');
 var retrieve_and_rank = watson.retrieve_and_rank({
-  username: '783c5984-daa9-4334-93d6-ac6f87c0b4d7',
-  password: 'uegcY7FvU5gz',
+  username: 'f7213345-5d80-4e5c-850f-712dec73b6d6',
+  password: 'CCSLbDnHpJXG',
   version: 'v1'
 });
 
 var params = {
-  cluster_id: 'sc8864bebe_b5f1_45c5_8428_a43b53bf9212',
+  cluster_id: 'scb567fb0f_0dd0_4c23_a773_872cf686e784',
   config_name: 'yeast-config',
-  collection_name: 'yeast-sample-collection',
+  collection_name: 'yeast_sample_collection',
   wt: 'json'
 };
 

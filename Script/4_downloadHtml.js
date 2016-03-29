@@ -57,7 +57,7 @@ reader.addListener('data', function(data) {
         console.log(error);
       }
     });
-
+    setTimeout(function() {}, 10000);
   }
 });
 

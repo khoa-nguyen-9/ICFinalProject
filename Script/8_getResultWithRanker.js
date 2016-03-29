@@ -2,10 +2,10 @@ var request = require("request")
 var officegen = require('officegen');
 var fs = require('fs');
 
-var url = "https://783c5984-daa9-4334-93d6-ac6f87c0b4d7:uegcY7FvU5gz@gateway.watsonplatform.net/retrieve-and-rank/api/v1/" 
-+ "solr_clusters/sc8864bebe_b5f1_45c5_8428_a43b53bf9212/solr/example-collection/"
-//+ "select?q=What is regulator of FBP1&wt=json&fl=id,body"
-+ "fcselect?ranker_id=42AF7Ex10-rank-1028&q=What is regulator of FBP1&wt=json&fl=id,body"
+var url = "https://f7213345-5d80-4e5c-850f-712dec73b6d6:CCSLbDnHpJXG@gateway.watsonplatform.net/retrieve-and-rank/api/v1/" 
++ "solr_clusters/scb567fb0f_0dd0_4c23_a773_872cf686e784/solr/yeast_sample_collection/"
++ "select?q=What is regulator of FBP1&wt=json&fl=id,body";
+//+ "fcselect?ranker_id=42AF7Ex10-rank-1028&q=What is regulator of FBP1&wt=json&fl=id,body";
 
 request({
     url: url,
@@ -25,7 +25,7 @@ request({
     	var day = date.getDate();
 		var monthIndex = date.getMonth();
 		var year = date.getFullYear();
-        var FILENAME = "result/" + 'results5_' + day + "_" + monthIndex + "_" + year +".xlsx";
+        var FILENAME = "result/" + 'results6_' + day + "_" + monthIndex + "_" + year +".xlsx";
         var out = fs.createWriteStream(FILENAME);
         xlsx.generate(out, {
         	'finalize': function ( written ) {

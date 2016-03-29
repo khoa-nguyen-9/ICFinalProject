@@ -1,9 +1,19 @@
-curl -X POST -H "Content-Type: application/json" -u "783c5984-daa9-4334-93d6-ac6f87c0b4d7":"uegcY7FvU5gz" "https://gateway.watsonplatform.net/retrieve-and-rank/api/v1/solr_clusters/sc8864bebe_b5f1_45c5_8428_a43b53bf9212/solr/yeast-sample-collection/update" --data-binary @resource/trainingdata.json
+curl -X POST -u "{username}":"{password}" "https://gateway.watsonplatform.net/retrieve-and-rank/api/v1/solr_clusters" -d "" 
 
-python ./train.py -u 783c5984-daa9-4334-93d6-ac6f87c0b4d7:uegcY7FvU5gz -i resource/yeastfag4.csv -c sc8864bebe_b5f1_45c5_8428_a43b53bf9212 -x yeast-sample-collection -n example-ranker4
+curl -u "f7213345-5d80-4e5c-850f-712dec73b6d6":"CCSLbDnHpJXG" "https://gateway.watsonplatform.net/retrieve-and-rank/api/v1/solr_clusters/scb567fb0f_0dd0_4c23_a773_872cf686e784"
 
-curl -u "783c5984-daa9-4334-93d6-ac6f87c0b4d7":"uegcY7FvU5gz"  "https://gateway.watsonplatform.net/retrieve-and-rank/api/v1/rankers/42B250x11-rank-696"
+curl -X POST -H "Content-Type: application/zip" -u "f7213345-5d80-4e5c-850f-712dec73b6d6":"CCSLbDnHpJXG" "https://gateway.watsonplatform.net/retrieve-and-rank/api/v1/solr_clusters/scb567fb0f_0dd0_4c23_a773_872cf686e784/config/yeast-config" --data-binary @/solrconfig.zip
 
-https://783c5984-daa9-4334-93d6-ac6f87c0b4d7:uegcY7FvU5gz@gateway.watsonplatform.net/retrieve-and-rank/api/v1/solr_clusters/sc8864bebe_b5f1_45c5_8428_a43b53bf9212/solr/yeast-sample-collection/select?q=What is the target of Aft1p&wt=json&fl=id,body
+curl -X POST -H "Content-Type: application/json" -u "f7213345-5d80-4e5c-850f-712dec73b6d6":"CCSLbDnHpJXG" "https://gateway.watsonplatform.net/retrieve-and-rank/api/v1/solr_clusters/scb567fb0f_0dd0_4c23_a773_872cf686e784/solr/yeast_sample_collection/update" --data-binary @resource/trainingdata.json
+
+python ./train.py -u f7213345-5d80-4e5c-850f-712dec73b6d6:CCSLbDnHpJXG -i resource/yeastfag4.csv -c scb567fb0f_0dd0_4c23_a773_872cf686e784 -x yeast_sample_collection -n example-ranker1
+
+curl -u "f7213345-5d80-4e5c-850f-712dec73b6d6":"CCSLbDnHpJXG" "https://gateway.watsonplatform.net/retrieve-and-rank/api/v1/rankers"
+
+curl -u "f7213345-5d80-4e5c-850f-712dec73b6d6":"CCSLbDnHpJXG" "https://gateway.watsonplatform.net/retrieve-and-rank/api/v1/rankers/868fedx13-rank-372"
+
+https://f7213345-5d80-4e5c-850f-712dec73b6d6:CCSLbDnHpJXG@gateway.watsonplatform.net/retrieve-and-rank/api/v1/solr_clusters/scb567fb0f_0dd0_4c23_a773_872cf686e784/solr/yeast_sample_collection/select?q=What is the target of Aft1p&wt=json&fl=id,body
 
 https://783c5984-daa9-4334-93d6-ac6f87c0b4d7:uegcY7FvU5gz@gateway.watsonplatform.net/retrieve-and-rank/api/v1/solr_clusters/sc8864bebe_b5f1_45c5_8428_a43b53bf9212/solr/example-collection/fcselect?ranker_id=42AF7Ex10-rank-973&q=What is regulator of PHO5&wt=json&fl=id,body
+
+curl -X DELETE -u "f7213345-5d80-4e5c-850f-712dec73b6d6":"CCSLbDnHpJXG" "https://gateway.watsonplatform.net/retrieve-and-rank/api/v1/rankers/868fedx13-rank-372"

@@ -54,78 +54,57 @@ var solrClient = retrieve.createSolrClient({
 
 var path = 'resource/collection/'
 fs.readdir(path, function(err, files) {
-    if (err) return;
-    files.forEach(function(f) {
-      console.log('Files: ' + f);
-      async.waterfall([
+  if (err) return;
+  files.forEach(function(f) {
+    console.log('Files: ' + f);
+    async.waterfall([
 
-  function convert(done) {
-    // convert a single document
-    document_conversion.convert({
-      // (JSON) ANSWER_UNITS, NORMALIZED_HTML, or NORMALIZED_TEXT
-      file: fs.createReadStream(__dirname + '/'+path + f),
-      conversion_target: document_conversion.conversion_target.ANSWER_UNITS,
-      config: {
-        html_to_html: {
-          specify_content_to_extract: {
-            enabled: true,
-            xpaths: ['//h3']
+      function convert(done) {
+        // convert a single document
+        document_conversion.convert({
+          // (JSON) ANSWER_UNITS, NORMALIZED_HTML, or NORMALIZED_TEXT
+          file: fs.createReadStream(__dirname + '/'+path + f),
+          conversion_target: document_conversion.conversion_target.ANSWER_UNITS,
+          config: {
+            html_to_html: {
+              specify_content_to_extract: {
+                enabled: true,
+                xpaths: ['//h3']
+              }
+            }
           }
-        }
-      }
-    }, function(err, response) {
-      if (err) {
-        console.error(err);
-      } else {
-        done(null, response);
-      }
-    });
-  },
-
-  function indexAndCommit(response, done) {
-    console.log('Indexing a document...');
-    var doc = mapAnswerUnits2SolrDocs(response);
-    solrClient.add(doc, function(err) {
-      if (err) {
-        console.log('Error indexing document: ' + err);
-        done();
-      } else {
-        console.log('Indexed a document.');
-        solrClient.commit(function(err) {
+       }, function(err, response) {
           if (err) {
-            console.log('Error committing change: ' + err);
+           console.error(err);
           } else {
-            console.log('Successfully committed changes.');
+            done(null, response);
           }
-          done();
+        });
+      },
+
+      function indexAndCommit(response, done) {
+        console.log('Indexing a document...');
+        var doc = mapAnswerUnits2SolrDocs(response);
+        solrClient.add(doc, function(err) {
+          if (err) {
+            console.log('Error indexing document: ' + err);
+            done();
+          } else {
+            console.log('Indexed a document.');
+            solrClient.commit(function(err) {
+              if (err) {
+                console.log('Error committing change: ' + err);
+              } else {
+                console.log('Successfully committed changes.');
+              }
+              done();
+            });
+          }
         });
       }
-    });
-  },
 
-  function _search(done) {
-    console.log('Searching all documents.');
-    var query = solrClient.createQuery();
-    // This query searches for the term 'psychological' in the body field.
-    // For a wildcard query use:
-    // query.q({ '*' : '*' });
-    query.q({
-      'body': 'regulate'
-    });
-
-    solrClient.search(query, function(err, searchResponse) {
-      if (err) {
-        console.log('Error searching for documents: ' + err);
-      } else {
-        console.log('Found ' + searchResponse.response.numFound + ' document(s).');
-        console.log('First document: ' + JSON.stringify(searchResponse.response.docs[0], null, 2));
-        console.log('Second document: ' + JSON.stringify(searchResponse.response.docs[1], null, 2));
-      }
-      done();
-    });
-  }
-]);
-    });
+    ]);
+  });
 });
 
 
