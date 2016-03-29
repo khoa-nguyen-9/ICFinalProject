@@ -11,7 +11,6 @@ $(document).ready(function() {
   var output_type = $(this).attr('data-type');
   var count = localStorage.getItem("count");
   if (count == null) {count = 0};
-  
   $.get( '/api/getgtdata',{}, function(gtdata) {
     generateRandomQuestion(gtdata,count);
     $.get( '/api/getresult',{question}, function(results) {

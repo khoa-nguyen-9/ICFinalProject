@@ -7,6 +7,7 @@
  fs           = require('fs'),
  qs           = require('qs'),
  PythonShell  = require('python-shell'),
+ striptags    = require('striptags'),
  csv          = require('ya-csv');
  
 /*
@@ -32,7 +33,7 @@ var retrieve_and_rank = watson.retrieve_and_rank({
 });
 
 var clusterId = 'scb567fb0f_0dd0_4c23_a773_872cf686e784';
-var collectionName = 'yeast_sample_collection';
+var collectionName = 'yeast_collection';
 var solrClient = retrieve_and_rank.createSolrClient({
   cluster_id: clusterId,
   collection_name: collectionName
@@ -141,7 +142,13 @@ app.get('/api/gettfs', function(req, res) {
  * Get genes list
  */
 var geneList = [];
+var geneInfoList = [];
 genereader.addListener('data', function(data) {
+  var geneInfo = {
+    gClass : data[1],
+    gName : data[3]
+  }
+  geneInfoList.push(geneInfo);
   geneList.push(data[4]);
 }); 
 
@@ -279,6 +286,36 @@ app.post('/createRanker',function(req,res){
 });
 
 /*
+ * Create new collection
+ */
+app.post('/createCollection',function(req,res){
+  var count = 0;
+  for (var i = 0; i < geneInfoList.length; i++) {
+    if (geneInfoList[i].gClass === 'ORF') {
+      count++;
+      var stdin = 'http://www.yeastgenome.org/locus/' + geneInfoList[i].gName +'/overview';
+      console.log(geneInfoList[i].gName);
+      request(stdin, function (error, response, html) {
+        if (!error) {
+          var overviewText = html.match(/regulation_overview(.*)/);
+          if((typeof overviewText !== 'undefined') && (overviewText != null)){
+            var overviewParagraph = overviewText[0].match("<p>(.*)</p>");
+            if(overviewParagraph !=null){
+              var text = striptags(overviewParagraph[0]).replace(/ *\([^)]*\) */g, "");
+              console.log(text);
+              var doc = { id : count, body: text };
+            }
+          }
+        } else {
+          console.log(error);
+        }
+      });
+      setTimeout(function(){}, 60000);
+    }
+  }
+});
+
+/*
  * Uploads a file
  */
 app.post('/files', app.upload.single('document'), function(req, res, next) {
@@ -332,6 +369,6 @@ app.get('/files/:id', function(req, res) {
 require('./config/error-handler')(app);
 
 
-var port = process.env.VCAP_APP_PORT || 3000;
+var port = process.env.VCAP_APP_PORT || 8080;
 app.listen(port);
 console.log('listening at:', port);
