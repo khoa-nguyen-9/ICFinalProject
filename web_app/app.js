@@ -33,7 +33,7 @@ var retrieve_and_rank = watson.retrieve_and_rank({
 });
 
 var clusterId = 'scb567fb0f_0dd0_4c23_a773_872cf686e784';
-var collectionName = 'yeast_collection';
+var collectionName = 'yeast_sample_collection';
 var solrClient = retrieve_and_rank.createSolrClient({
   cluster_id: clusterId,
   collection_name: collectionName
@@ -367,7 +367,6 @@ app.get('/files/:id', function(req, res) {
 
 // error-handler settings
 require('./config/error-handler')(app);
-
 
 var port = process.env.VCAP_APP_PORT || 8080;
 app.listen(port);
