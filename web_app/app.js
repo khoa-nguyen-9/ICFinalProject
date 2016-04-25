@@ -27,13 +27,13 @@ var document_conversion = watson.document_conversion({
 });
 
 var retrieve_and_rank = watson.retrieve_and_rank({
-  username: 'f7213345-5d80-4e5c-850f-712dec73b6d6',
-  password: 'CCSLbDnHpJXG',
+  username: 'a4ba001c-b9d8-4237-93d7-18236111eb15',
+  password: 'DuOlum4khC4S',
   version: 'v1'
 });
 
-var clusterId = 'scb567fb0f_0dd0_4c23_a773_872cf686e784';
-var collectionName = 'yeast_sample_collection';
+var clusterId = 'sc59eda1ec_f3df_4a09_8b6e_bb663abe4b71';
+var collectionName = 'yeast_collection';
 var solrClient = retrieve_and_rank.createSolrClient({
   cluster_id: clusterId,
   collection_name: collectionName

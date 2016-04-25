@@ -8,7 +8,7 @@ var selectedGene = '';
 $(document).ready(function() {
 
   $('.getResultButton').click(function() {
-    
+    alert('here');
     var output_format = $(this).attr('data-attr');
     var output_type = $(this).attr('data-type');
     var list = document.getElementById("geneList");
@@ -203,14 +203,14 @@ function getUserQuestion() {
   id = '4';
   question = document.getElementById('userQuestion').value;
   clear_file_upload();
-
+  alert(question);
   $('._content--choose-output-format.active').removeClass('active');
   $('._content--output.active').removeClass('active');
-  $('#display_input_doc').html(display_pdf);
+  $('._content--choose-output-format').addClass('active');
   $('.sample--list-item-tab.active').removeClass('active');
   $('.upload--container.active').removeClass('active');
   $('.format--list-item-tab.active').removeClass('active');
-  $('.sample--list-item-tab:eq(2)').addClass('active');
+  $('.sample--list-item-tab:eq(0)').addClass('active');
   $('.code--output-code').empty();
 
   displayGeneList();
