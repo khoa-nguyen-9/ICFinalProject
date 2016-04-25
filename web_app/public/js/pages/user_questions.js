@@ -8,7 +8,6 @@ var selectedGene = '';
 $(document).ready(function() {
 
   $('.getResultButton').click(function() {
-    alert('here');
     var output_format = $(this).attr('data-attr');
     var output_type = $(this).attr('data-type');
     var list = document.getElementById("geneList");
