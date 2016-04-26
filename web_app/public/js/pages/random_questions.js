@@ -17,8 +17,10 @@ $(document).ready(function() {
       var table = document.getElementById("answers");
       for (var i = 0; i < results.length; i++) {
         var row = table.insertRow(-1);
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
+        var cell0 = row.insertCell(0);
+        var cell1 = row.insertCell(1);
+        var cell2 = row.insertCell(2);
+        cell0.innerHTML = results[i].title;
         cell1.innerHTML = results[i].body;
         var cellOption = "<select id=\"answer" + i +"Options\">";
 

@@ -32,7 +32,7 @@ var retrieve_and_rank = watson.retrieve_and_rank({
   version: 'v1'
 });
 
-var clusterId = 'sc59eda1ec_f3df_4a09_8b6e_bb663abe4b71';
+var clusterId = 'sc2206a51d_4901_4a90_8c57_d844cb0d4a37';
 var collectionName = 'yeast_collection';
 var solrClient = retrieve_and_rank.createSolrClient({
   cluster_id: clusterId,
@@ -184,7 +184,7 @@ app.get('/api/getresult', function(req, res) {
               var ranker_id = response.ranker_id;
               console.log(ranker_id);
               question      = 'q=' + question;
-              var query     = qs.stringify({q: question, ranker_id: ranker_id, fl: 'id,body'});
+              var query     = qs.stringify({q: question, ranker_id: ranker_id, fl: 'id,body,title'});
               solrClient.get('fcselect', query, function(err, searchResponse) {
                 if(err) {
                   console.log('Error searching for documents: ' + err);
@@ -194,7 +194,8 @@ app.get('/api/getresult', function(req, res) {
                   for(var i = 0; i < searchResponse.response.docs.length;i++){
                     var result = {
                       id : searchResponse.response.docs[i].id,
-                      body : searchResponse.response.docs[i].body[0]
+                      body : searchResponse.response.docs[i].body[0],
+                      title: searchResponse.response.docs[i].title[0]
                     };
                     results.push(result);
                   }
