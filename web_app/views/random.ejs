@@ -70,63 +70,64 @@
 					<a href="https://github.com/watson-developer-cloud/document-conversion-nodejs" class="base--a" target="_blank">Fork on Github</a>
 				</li>
 			</div> -->
+			</div>
 		</div>
 	</div>
-</div>
 
-<div class="_demo--container">
-	<article class="_content base--article">
-		<div class="_content--output">
+	<div class="_demo--container">
+		<article class="_content base--article">
+			<div class="_content--output">
 
-			<p class="base--p description--answer-unit">
-				The Answer units can be run through a utility to create a Solr collection needed to train the Retrieve and Rank service.
-			</p>
-			<div class="tab-panels" role="tabpanel">
-				<ul class="tab-panels--tab-list" role="tablist">
-					<li class="tab-panels--tab-list-item base--li" role="presentation">
-						<a class="tab-panels--tab base--a active" href="#display_input_doc" aria-controls="display_input_doc" role="tab">Your question:</a>
-					</li>
-					<a title="Download input file" href="" class="download--input-icon icon icon-download download--icon"></a>
-				</ul>
-				<div class="tab-panels--tab-content">
-					<div id="display_input_doc"></div>
-				</div>
-			</div>
-
-			<div class="tab-panels" role="tabpanel">
-				<ul class="tab-panels--tab-list" role="tablist">
-					<li class="tab-panels--tab-list-item base--li" role="presentation">
-						<a class="tab-panels--tab base--a active" href="#display_output_doc" aria-controls="display_output_doc" role="tab">Answers:</a>
-					</li>
-					<a title="Download output file" href="" class="download--output-icon icon icon-download download--icon"></a>
-				</ul>
-				<div class="tab-panels--tab-content">
-					<div id="display_output_doc" class="tab-panels--tab-pane active" role="tab-panel">
-						<table id="answers"></table>
-						<button class="newQuestionButton">Get new question</button>
-						<button class="endSessionButton" onclick="location.href='http://146.169.46.202:8080/endsession';">End session</button>
+				<p class="base--p description--answer-unit">
+					The Answer units can be run through a utility to create a Solr collection needed to train the Retrieve and Rank service.
+				</p>
+				<div class="tab-panels" role="tabpanel">
+					<ul class="tab-panels--tab-list" role="tablist">
+						<li class="tab-panels--tab-list-item base--li" role="presentation">
+							<a class="tab-panels--tab base--a active" href="#display_input_doc" aria-controls="display_input_doc" role="tab">Your question:</a>
+						</li>
+						<a title="Download input file" href="" class="download--input-icon icon icon-download download--icon"></a>
+					</ul>
+					<div class="tab-panels--tab-content">
+						<div id="display_input_doc"></div>
 					</div>
-
 				</div>
+
+				<div class="tab-panels" role="tabpanel">
+					<ul class="tab-panels--tab-list" role="tablist">
+						<li class="tab-panels--tab-list-item base--li" role="presentation">
+							<a class="tab-panels--tab base--a active" href="#display_output_doc" aria-controls="display_output_doc" role="tab">Answers:</a>
+						</li>
+						<a title="Download output file" href="" class="download--output-icon icon icon-download download--icon"></a>
+					</ul>
+					<div class="tab-panels--tab-content">
+						<div id="display_output_doc" class="tab-panels--tab-pane active" role="tab-panel">
+							<table id="answers"></table>
+							<button class="newQuestionButton">Get new question</button>
+							<button class="endSessionButton" onclick="location.href='http://146.169.46.202:8080/endsession';">End session</button>
+						</div>
+
+					</div>
+				</div>
+				<svg width="960" height="600"></svg>
 			</div>
-		</div>
 
-		<span class="icon-hyperlink">
-			<span class="icon icon-back2top"></span>
-			<a href="#top" class="base--a">
-				Back to top
-			</a>
-		</span>
+			<span class="icon-hyperlink">
+				<span class="icon icon-back2top"></span>
+				<a href="#top" class="base--a">
+					Back to top
+				</a>
+			</span>
 
-	</article>
-
-</div>
-
-<script type="text/javascript" src="js/vendors/jquery.min.js"></script>
-<script type="text/javascript" src="js/vendors/jquery.ui.widget.js"></script>
-<script type="text/javascript" src="js/vendors/jquery.fileupload.js"></script>
-<script type="text/javascript" src="js/vendors/jquery.iframe-transport.js"></script>
-<script type="text/javascript" src="js/pages/random_questions.js"></script>
-<script type="text/javascript" src="js/ga.js"></script>
+		</article>
+	</div>
+	<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/components/visual.js"></script>
+	<script type="text/javascript" src="js/vendors/jquery.min.js"></script>
+	<script type="text/javascript" src="js/vendors/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="js/vendors/jquery.fileupload.js"></script>
+	<script type="text/javascript" src="js/vendors/jquery.iframe-transport.js"></script>
+	<script type="text/javascript" src="js/pages/random_questions.js"></script>
+	<script type="text/javascript" src="js/ga.js"></script>
 </body>
 </html>

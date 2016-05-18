@@ -8,7 +8,9 @@
  qs           = require('qs'),
  PythonShell  = require('python-shell'),
  striptags    = require('striptags'),
- csv          = require('ya-csv');
+ csv          = require('ya-csv'),
+ wait         = require('wait.for'),
+ natural      = require('natural');
  
 /*
  * Bootstrap application settings
@@ -45,6 +47,8 @@ var types = {
   'NORMALIZED_TEXT': '.txt'
 };
 
+var keyWords = ["regulate", "repress", "target", "induce", "activate", "transcription"];
+
 var samples = ['sampleHTML.html','samplePDF.pdf','sampleWORD.docx'];
 
 var uploadFolder   = __dirname + '/uploads/';
@@ -68,7 +72,7 @@ var tfreader = csv.createCsvFileReader(resourceFolder + 'Gene_Regulation.csv', {
   'comment': '',
 });
 
-var gtreader = csv.createCsvFileReader(resourceFolder + 'ground_truth.csv', {
+var gtreader = csv.createCsvFileReader(resourceFolder + 'gt.csv', {
   'separator': ',',
   'quote': '"',
   'escape': '"',       
@@ -156,12 +160,42 @@ app.get('/api/getgenes', function(req, res) {
   res.send(geneList);
 });
 
-/*
- * Get result
- */
-app.get('/api/getresult', function(req, res) {
-  var question = req.query.question;
-  //var ranker_id = '868fedx13-rank-337';
+function checkRanker(params,callback) {
+  retrieve_and_rank.rankerStatus(params,
+  function(err, response) {
+    if (err)
+      console.log('error:', err);
+    else {
+      if (response.status == "Available") {
+        var ranker_id = response.ranker_id;
+        console.log(ranker_id);
+        var question      = 'q=' + params.question;
+        var query     = qs.stringify({q: question, ranker_id: ranker_id, fl: 'id,body,title'});
+        solrClient.get('fcselect', query, function(err, searchResponse) {
+          if(err) {
+            console.log('Error searching for documents: ' + err);
+          }
+          else {
+            var results = [];
+            for(var i = 0; i < 5;i++){
+              var result = {
+                id : searchResponse.response.docs[i].id,
+                body : searchResponse.response.docs[i].body[0],
+                title: searchResponse.response.docs[i].title[0]
+              };
+              results.push(result);
+            }
+            callback(null,results);
+          }
+        });
+      } else {
+        return null;
+      }
+    }     
+  });
+}
+
+function getRankers(callback) {
   retrieve_and_rank.listRankers({},
   function(err, response) {
     if (err)
@@ -170,46 +204,115 @@ app.get('/api/getresult', function(req, res) {
       response.rankers.sort(function(a,b){
         return new Date(b.created) - new Date(a.created);
       });
-      var i = response.rankers.length-1;
-      //for(var i = 0; i<response.rankers.length; i++) {
-        var params = {
-          ranker_id: response.rankers[i].ranker_id,
-        };
-        retrieve_and_rank.rankerStatus(params,
-        function(err, response) {
-          if (err)
-            console.log('error:', err);
-          else {
-            if (response.status == "Available") {
-              var ranker_id = response.ranker_id;
-              console.log(ranker_id);
-              question      = 'q=' + question;
-              var query     = qs.stringify({q: question, ranker_id: ranker_id, fl: 'id,body,title'});
-              solrClient.get('fcselect', query, function(err, searchResponse) {
-                if(err) {
-                  console.log('Error searching for documents: ' + err);
-                }
-                else {
-                  var results = [];
-                  for(var i = 0; i < searchResponse.response.docs.length;i++){
-                    var result = {
-                      id : searchResponse.response.docs[i].id,
-                      body : searchResponse.response.docs[i].body[0],
-                      title: searchResponse.response.docs[i].title[0]
-                    };
-                    results.push(result);
-                  }
-                  res.send(results);
-                  return;
-                }
-              });
-            }
-          }     
-        });
-      //}
+      callback(null,response.rankers);
     }
   });
+  
+}
+function getResult(req, res) {
+  var question = req.query.question;
+  var rankers = wait.for(getRankers);
 
+  for(var i = 0; i<rankers.length; i++) {
+    var params = {
+      ranker_id: rankers[i].ranker_id,
+      question: question
+    };
+    params.ranker_id = '3b140ax14-rank-1930';
+    var results = wait.for(checkRanker,params);
+    if (results != null) {
+      res.send(results);
+      return;
+    }
+  }
+} 
+
+/*
+ * Proximity search
+ */
+app.get('/api/getproxsearch', function(req, res) {
+  //console.log(geneList);
+  var result = {
+      nodes : [],
+      links : []
+  }
+  for (var p = 0; p < req.query.paragraphs.length; p++) {
+    var text = req.query.paragraphs[p];
+    var TfIdf = natural.TfIdf,
+        tfidf = new TfIdf();
+    var sentences = text.match(/(.*?(?:\.|\?|!))(?: |$)/g);
+    if (sentences!= null) {
+      for (var i = 0; i<sentences.length; i++) {
+        tfidf.addDocument(sentences[i]);
+      }
+      var nodes = [];
+      for (var i = 0; i<keyWords.length;i++) {
+        for (var j = 0; j < sentences.length; j++) {
+          var tokens = sentences[j].split(" ");
+          for (var z = 0; z < tokens.length; z++) {
+            if (natural.JaroWinklerDistance(keyWords[i],tokens[z]) > 0.9) {
+              for (var k = 0; k< geneList.length; k++) {
+                var index = sentences[j].toUpperCase().indexOf(geneList[k]);
+                if ( (index >= 0) && (geneList[k] !== '')) { 
+                  var key = sentences[j].substring(index,index+geneList[k].length);
+                  if ((key != "ho") && (is_in_array(key,nodes)== -1)) {
+                    if (key == key.toUpperCase()) {
+                      nodes.push({id: key, url: geneInfoList[k].gName, group: 2});
+                    } else {
+                      var newKey = sentences[j].substring(index,index+geneList[k].length+1);
+                      nodes.push({id: newKey, url: geneInfoList[k].gName, group: 1});
+                    }  
+                  }
+                }
+              }
+              break;
+            }
+
+          }  
+        }
+      } 
+
+      nodes = nodes.filter(function(elem, pos,arr) {
+        return arr.indexOf(elem) == pos;
+      });
+      for (var i = 0; i < nodes.length; i++) {
+        if (nodes[i].group == 1) {
+          var check1 = is_in_array(nodes[i].id,result.nodes);
+          if (check1 == -1) {
+             result.nodes.push(nodes[i]);
+             check1 = result.nodes.length-1;
+          }
+          for (var j = 0; j < nodes.length; j++) {
+            if (nodes[j].group == 2) {
+              var check2 = is_in_array(nodes[j].id,result.nodes);
+              if (check2 == -1) {
+                result.nodes.push(nodes[j]);
+                check2 = result.nodes.length-1;
+              }
+              result.links.push({source: check1, target: check2, type: "resolved"})
+            }
+          }
+        }
+      }
+    }
+  }
+  console.log(result);
+  res.send(result);
+});
+
+
+function is_in_array(s,your_array) {
+    for (var i = 0; i < your_array.length; i++) {
+        if (your_array[i].id.toLowerCase() === s.toLowerCase()) return i;
+    }
+    return -1;
+}
+
+/*
+ * Get result 
+ */
+app.get('/api/getresult', function(req, res) {
+  wait.launchFiber(getResult,req,res);
 });
 
 /*
@@ -240,7 +343,8 @@ app.get('/api/getgtdata', function(req, res) {
  * Update ground truth data
  */
 app.post('/updategt',function(req,res){
-  var gtwriter = csv.createCsvFileWriter(resourceFolder + 'ground_truth.csv');
+  var d = new Date();
+  var gtwriter = csv.createCsvFileWriter(resourceFolder + 'gt_' + d.getDate() + '-' + (d.getMonth()+1) + '-' + d.getFullYear() + '.csv');
   var updates = req.body.gtdata;
   for (var i = 0; i < updates.length; i++) {
     var record = [];
@@ -259,11 +363,12 @@ app.post('/updategt',function(req,res){
  * Create new ranker
  */
 app.post('/createRanker',function(req,res){
+  var d = new Date();
   var options = {
     mode: 'text',
-    args: ['-u', 'f7213345-5d80-4e5c-850f-712dec73b6d6:CCSLbDnHpJXG', 
-    '-i', 'public/resource/ground_truth.csv', '-c', 'scb567fb0f_0dd0_4c23_a773_872cf686e784', 
-    '-x', 'yeast_sample_collection', '-n','example-ranker2']
+    args: ['-u', 'a4ba001c-b9d8-4237-93d7-18236111eb15:DuOlum4khC4S', 
+    '-i', 'public/resource/gt_' + d.getDate() + '-' + (d.getMonth()+1) + '-' + d.getFullYear() + '.csv', '-c', 'sc2206a51d_4901_4a90_8c57_d844cb0d4a37', 
+    '-x', 'yeast_collection', '-n','yeast_ranker']
   };
  
   var pyshell = new PythonShell('public/resource/train.py',options);
@@ -366,7 +471,9 @@ app.get('/files/:id', function(req, res) {
   .pipe(res);
 });
 
-// error-handler settings
+/*
+ * error-handler settings
+ */
 require('./config/error-handler')(app);
 
 var port = process.env.VCAP_APP_PORT || 8080;

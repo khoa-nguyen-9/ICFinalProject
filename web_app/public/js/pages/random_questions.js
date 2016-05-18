@@ -46,14 +46,14 @@ $(document).ready(function() {
         var labels = [];
         for (var i = 0; i < results.length; i++) {
           var o = document.getElementById("answer" + i +"Options");
-          if (o.options[o.selectedIndex].value != 0) {
+          //if (o.options[o.selectedIndex].value != 0) {
             var label = {
               id : results[i].id,
               rank : o.options[o.selectedIndex].value
             }
 
             labels.push(label);  
-          }
+          //}
         }
         if (labels.length == 0) {
           var label = {
@@ -76,6 +76,7 @@ $(document).ready(function() {
       });
 
       $('.endSessionButton').click(function() {
+        localStorage.setItem("count", 0);
         $.post('/createRanker',{}, function(data){
         });
       });
@@ -99,8 +100,17 @@ $(document).ready(function() {
 });
 
 function highlightTFs() {
-  var parameters = { };
-  $.get( '/api/gettfs',parameters, function(data) {
+  var table = document.getElementById("answers");
+  var noRows = table.rows.length;
+  var paragraphs = [];
+  for (var i = 0; i < noRows; i++) {
+    paragraphs.push(table.rows[i].innerHTML);
+  }
+  $.get( '/api/getproxsearch' , {paragraphs}, function(data) {
+    createGraph(data);
+  });
+  
+  $.get( '/api/gettfs',{}, function(data) {
     data = unique(data);
     for (var i = 0; i < data.length; i++) {
       highlightAnswer(data[i]);

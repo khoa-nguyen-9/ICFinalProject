@@ -52,14 +52,14 @@ $(document).ready(function() {
           var labels = [];
           for (var i = 0; i < results.length; i++) {
             var o = document.getElementById("answer" + i +"Options");
-            if (o.options[o.selectedIndex].value != 0) {
+            //if (o.options[o.selectedIndex].value != 0) {
               var label = {
                 id : results[i].id,
                 rank : o.options[o.selectedIndex].value
               }
 
               labels.push(label);  
-            }
+            //}
           }
           if (labels.length == 0) {
             var label = {
@@ -106,8 +106,7 @@ $(document).ready(function() {
 
  });
 
-function highlightTFs()
-{
+function highlightTFs(){
   var parameters = { };
   $.get( '/api/gettfs',parameters, function(data) {
     data = unique(data);
@@ -115,10 +114,19 @@ function highlightTFs()
       highlightAnswer(data[i]);
     }
   });
+
+  var table = document.getElementById("answers");
+  var noRows = table.rows.length;
+  var paragraphs = [];
+  for (var i = 0; i < noRows; i++) {
+    paragraphs.push(table.rows[i].innerHTML);
+  }
+  $.get( '/api/getproxsearch' , {paragraphs}, function(data) {
+    createGraph(data);
+  });
 }
 
-function highlightAnswer(text)
-{
+function highlightAnswer(text){
   var table = document.getElementById("answers");
   var noRows = table.rows.length;
   for (var i = 0; i < noRows; i++) {
@@ -203,18 +211,15 @@ function getUserQuestion() {
   hideError();
   id = '4';
   question = document.getElementById('userQuestion').value;
-  clear_file_upload();
-  alert(question);
+
   $('._content--choose-output-format.active').removeClass('active');
   $('._content--output.active').removeClass('active');
   $('._content--choose-output-format').addClass('active');
   $('.sample--list-item-tab.active').removeClass('active');
   $('.upload--container.active').removeClass('active');
   $('.format--list-item-tab.active').removeClass('active');
-  $('.sample--list-item-tab:eq(0)').addClass('active');
+  $('.sample--list-item-tab:eq(2)').addClass('active');
   $('.code--output-code').empty();
-
-  displayGeneList();
   
   var top = document.getElementById('upload-your-document').offsetTop;
   window.scrollTo(0, top);

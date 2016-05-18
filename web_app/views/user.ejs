@@ -103,15 +103,12 @@
 						<span class="sample--icon icon icon-doc_icon"></span>
 						<span class="sample--title sample--pdf-file">Is the regulation of ___ positive or negative?</span>
 					</div>
-
-					<div class="sample--list-item-tab" onclick="chooseQ4()">
-						<form class="upload-form" id="fileupload" enctype='multipart/form-data'>
-							or Type your question here:
-							<input type="text" id="userQuestion">
-							<button onclick="getUserQuestion()">Submit</button>
-						</form>
-						<br>
-					</div>
+					<form class="upload-form" id="fileupload" enctype='multipart/form-data'>
+						or Type your question here:
+						<input type="text" id="userQuestion">
+						<button onclick="getUserQuestion()">Submit</button>
+					</form>
+					<br>
 				</div>
 				<div class="error" style="color:#a53725;text-align:center;"></div>
 
@@ -154,11 +151,16 @@
 					<div class="tab-panels--tab-content">
 						<div id="display_output_doc" class="tab-panels--tab-pane active" role="tab-panel">
 							<table id="answers"></table>
-							<!-- <button class="submitRankingButton">Submit</button>
-							<button class="endSessionButton" onclick="location.href='http://146.169.46.202:8080/endsession';">End session</button> -->
+							<button class="submitRankingButton">Submit</button>
+							<!-- <button class="endSessionButton" onclick="location.href='http://146.169.46.202:8080/endsession';">End session</button> -->
 						</div>
 					</div>
 				</div>
+<!-- 				<div class="ui-widget">
+    				<input id="search">
+    				<button type="button" onclick="searchNode()">Search</button>
+				</div> -->
+				<svg width="960" height="600"></svg>
 			</div>
 
 			<span class="icon-hyperlink">
@@ -172,7 +174,8 @@
 
 	</div>
 
-
+	<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/components/visual.js"></script>
 	<script type="text/javascript" src="js/vendors/jquery.min.js"></script>
 	<script type="text/javascript" src="js/vendors/jquery.ui.widget.js"></script>
 	<script type="text/javascript" src="js/vendors/jquery.fileupload.js"></script>
