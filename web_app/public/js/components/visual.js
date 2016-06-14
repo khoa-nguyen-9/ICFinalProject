@@ -32,11 +32,15 @@ function createGraph(graph) {
     .append("path")
       .attr("d", "M0,-5L10,0L0,5");
 
-  var path = svg.append("g").selectAll("path")
+  var path = svg.append("g").selectAll(".link")
       .data(force.links())
     .enter().append("path")
+      .attr("id",function(d,i) { return "linkId_" + i; })
       .attr("class", function(d) { return "link " + d.type; })
-      .attr("marker-end", function(d) { return "url(#" + d.type + ")"; });
+      .attr("marker-end", function(d) { return "url(#" + d.type + ")"; })
+      .on("mouseover", function(d) {
+        alert(d.sentence);
+      });
 
   var circle = svg.append("g").selectAll("circle")
       .data(force.nodes())
@@ -73,42 +77,20 @@ function createGraph(graph) {
     return "translate(" + d.x + "," + d.y + ")";
   }
 
-  // var optArray = [];
-  // for (var i = 0; i < graph.nodes.length - 1; i++) {
-  //     optArray.push(graph.nodes[i].id);
-  // }
-
-  // optArray = optArray.sort();
-
-  // $(function () {
-  //     $("#search").autocomplete({
-  //         source: optArray
-  //     });
-  // });
-
 }
 
-function searchNode() {
-
-    //find the node
-
-    var selectedVal = document.getElementById('search').value;
-    var node = svg.selectAll(".node");
-
-    if (selectedVal == "none") {
-        node.style("stroke", "white").style("stroke-width", "1");
-    } else {
-        var selected = node.filter(function (d, i) {
-            return d.id != selectedVal;
-        });
-        selected.style("opacity", "0");
-        var link = svg.selectAll(".link")
-        link.style("opacity", "0");
-        d3.selectAll(".node, .link").transition()
-            .duration(10000)
-            .style("opacity", 1);
-
-
+function highlightAnswer(text) {
+  var table = document.getElementById("answers");
+  var noRows = table.rows.length;
+  for (var i = 0; i < noRows; i++) {
+    var innerHTML = table.rows[i].innerHTML;
+    var index = innerHTML.toUpperCase().indexOf(text);
+    if ( index >= 0 ) { 
+      innerHTML = innerHTML.substring(0,index) + "<span class='highlight'>" + innerHTML.substring(index,index+text.length) + "</span>" + innerHTML.substring(index + text.length);
+      table.rows[i].innerHTML = innerHTML;
     }
+  }
 }
+
+
 

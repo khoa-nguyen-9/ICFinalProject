@@ -29,12 +29,12 @@ var document_conversion = watson.document_conversion({
 });
 
 var retrieve_and_rank = watson.retrieve_and_rank({
-  username: 'a4ba001c-b9d8-4237-93d7-18236111eb15',
-  password: 'DuOlum4khC4S',
+  username: '73fa7a4a-31d5-4c3b-a467-9f1a736d6e85',
+  password: 'vzZIsWzxZb8C',
   version: 'v1'
 });
 
-var clusterId = 'sc2206a51d_4901_4a90_8c57_d844cb0d4a37';
+var clusterId = 'sc416f4c03_fff5_42bb_a616_7d4cf4bdac3c';
 var collectionName = 'yeast_collection';
 var solrClient = retrieve_and_rank.createSolrClient({
   cluster_id: clusterId,
@@ -47,7 +47,7 @@ var types = {
   'NORMALIZED_TEXT': '.txt'
 };
 
-var keyWords = ["regulate", "repress", "target", "induce", "activate", "transcription"];
+var keyWords = ["regulate", "repression", "target", "induce", "activate", "transcription"];
 
 var samples = ['sampleHTML.html','samplePDF.pdf','sampleWORD.docx'];
 
@@ -170,18 +170,19 @@ function checkRanker(params,callback) {
         var ranker_id = response.ranker_id;
         console.log(ranker_id);
         var question      = 'q=' + params.question;
-        var query     = qs.stringify({q: question, ranker_id: ranker_id, fl: 'id,body,title'});
+        var query     = qs.stringify({q: question, ranker_id: ranker_id, fl: 'id,body,title,confidence,score'});
         solrClient.get('fcselect', query, function(err, searchResponse) {
           if(err) {
             console.log('Error searching for documents: ' + err);
           }
           else {
             var results = [];
-            for(var i = 0; i < 5;i++){
+            for(var i = 0; i < searchResponse.response.docs.length;i++){
               var result = {
                 id : searchResponse.response.docs[i].id,
                 body : searchResponse.response.docs[i].body[0],
-                title: searchResponse.response.docs[i].title[0]
+                title: searchResponse.response.docs[i].title[0],
+                score: searchResponse.response.docs[i].score
               };
               results.push(result);
             }
@@ -218,7 +219,7 @@ function getResult(req, res) {
       ranker_id: rankers[i].ranker_id,
       question: question
     };
-    params.ranker_id = '3b140ax14-rank-1930';
+    params.ranker_id = '3b140ax15-rank-2831';
     var results = wait.for(checkRanker,params);
     if (results != null) {
       res.send(results);
@@ -231,74 +232,119 @@ function getResult(req, res) {
  * Proximity search
  */
 app.get('/api/getproxsearch', function(req, res) {
-  //console.log(geneList);
   var result = {
-      nodes : [],
-      links : []
+    nodes : [],
+    links : []
   }
-  for (var p = 0; p < req.query.paragraphs.length; p++) {
-    var text = req.query.paragraphs[p];
-    var TfIdf = natural.TfIdf,
-        tfidf = new TfIdf();
-    var sentences = text.match(/(.*?(?:\.|\?|!))(?: |$)/g);
-    if (sentences!= null) {
-      for (var i = 0; i<sentences.length; i++) {
-        tfidf.addDocument(sentences[i]);
+  result = extractGeneGraph(req.query.paragraphs, result, "resolved");
+  var obj = JSON.parse(fs.readFileSync(resourceFolder + 'corpus.json'));
+  var paragraphs = [];
+  for (var i=0; i<obj.paragraphs.length;i++) {
+    for (var j=0; j <result.nodes.length; j++) {
+      var index = obj.paragraphs[i].body.toUpperCase().indexOf(result.nodes[j].id);
+      if (index >= 0) {
+        paragraphs.push(obj.paragraphs[i].body);
       }
-      var nodes = [];
+    }
+  }
+  result = extractGeneGraph(paragraphs, result, "licensing");
+  console.log(result);
+  //wait.launchFiber(getResult,req.query.paragraphIDs);
+  res.send(result);
+
+});
+
+function getExtraGeneInfo(result,paragraphIDs) {
+  for (var i = 0; i < result.nodes; i++) {
+    if (is_in_array(result.nodes,paragraphIDs) != -1) {
+      wait.for(queryWithoutRanker,params);
+    }
+  }
+}
+
+function queryWithoutRanker(geneName) {
+  var url = "https://73fa7a4a-31d5-4c3b-a467-9f1a736d6e85:vzZIsWzxZb8C@gateway.watsonplatform.net/retrieve-and-rank/api/v1/" 
+  + "solr_clusters/sc416f4c03_fff5_42bb_a616_7d4cf4bdac3c/solr/example-collection/"
+  + "select?q=" + geneName + "&wt=json&fl=id,body";
+
+  request({
+      url: url,
+      json: true
+  }, function (error, response, body) {
+    if (!error && response.statusCode === 200) {
+      for(var i = 0; i < body.response.docs.length;i++){
+        sheet.data[i] = [];
+        sheet.data[i][0] = body.response.docs[i].id;
+        sheet.data[i][1] = body.response.docs[i].body[0];
+      }
+    }
+  })
+}
+
+function extractGeneGraph(paragraphs,result,type) {
+  for (var p = 0; p < paragraphs.length; p++) {
+    var text = paragraphs[p];
+    var sentences = text.match(/[^\.!\?]+[\.!\?]+/g);
+    if (sentences!= null) {
       for (var i = 0; i<keyWords.length;i++) {
         for (var j = 0; j < sentences.length; j++) {
           var tokens = sentences[j].split(" ");
           for (var z = 0; z < tokens.length; z++) {
-            if (natural.JaroWinklerDistance(keyWords[i],tokens[z]) > 0.9) {
+            if (natural.JaroWinklerDistance(keyWords[i],tokens[z]) > 0.8) {
+              var nodes = [];
               for (var k = 0; k< geneList.length; k++) {
                 var index = sentences[j].toUpperCase().indexOf(geneList[k]);
                 if ( (index >= 0) && (geneList[k] !== '')) { 
                   var key = sentences[j].substring(index,index+geneList[k].length);
-                  if ((key != "ho") && (is_in_array(key,nodes)== -1)) {
+                  if (key != "ho") {
                     if (key == key.toUpperCase()) {
-                      nodes.push({id: key, url: geneInfoList[k].gName, group: 2});
+                      nodes.push({id: key.toUpperCase(), url: geneInfoList[k].gName, group: 2});
                     } else {
-                      var newKey = sentences[j].substring(index,index+geneList[k].length+1);
-                      nodes.push({id: newKey, url: geneInfoList[k].gName, group: 1});
+                      nodes.push({id: key.toUpperCase(), url: geneInfoList[k].gName, group: 1});
                     }  
+                  }
+                }
+              }
+              for (var n = 0; n < nodes.length; n++) {
+                if (nodes[n].group == 1) {
+                  for (var m = 0; m < nodes.length; m++) {
+                    if (nodes[m].group == 2) {
+                      var check1 = is_in_array(nodes[n].id,result.nodes);
+                      if (check1 == -1) {
+                        result.nodes.push(nodes[n]);
+                        check1 = result.nodes.length-1;
+                      }
+                      var check2 = is_in_array(nodes[m].id,result.nodes);
+                      if (check2 == -1) {
+                        result.nodes.push(nodes[m]);
+                        check2 = result.nodes.length-1;
+                      }
+                      var check3 = 0
+                      for (var link = 0; link < result.links.length; link++) {
+                        if ((result.links[link].source == check1) && (result.links[link].target ==check2)) {
+                          check3 = 1;
+                          break;
+                        }
+                      }
+                      if (check3 == 0) {
+                        result.links.push({source: check1, target: check2, type: type, sentence: sentences[j]});
+                      } 
+                    }
                   }
                 }
               }
               break;
             }
-
           }  
         }
-      } 
-
+      }   
       nodes = nodes.filter(function(elem, pos,arr) {
         return arr.indexOf(elem) == pos;
       });
-      for (var i = 0; i < nodes.length; i++) {
-        if (nodes[i].group == 1) {
-          var check1 = is_in_array(nodes[i].id,result.nodes);
-          if (check1 == -1) {
-             result.nodes.push(nodes[i]);
-             check1 = result.nodes.length-1;
-          }
-          for (var j = 0; j < nodes.length; j++) {
-            if (nodes[j].group == 2) {
-              var check2 = is_in_array(nodes[j].id,result.nodes);
-              if (check2 == -1) {
-                result.nodes.push(nodes[j]);
-                check2 = result.nodes.length-1;
-              }
-              result.links.push({source: check1, target: check2, type: "resolved"})
-            }
-          }
-        }
-      }
     }
   }
-  console.log(result);
-  res.send(result);
-});
+  return result;
+}
 
 
 function is_in_array(s,your_array) {
@@ -344,7 +390,7 @@ app.get('/api/getgtdata', function(req, res) {
  */
 app.post('/updategt',function(req,res){
   var d = new Date();
-  var gtwriter = csv.createCsvFileWriter(resourceFolder + 'gt_' + d.getDate() + '-' + (d.getMonth()+1) + '-' + d.getFullYear() + '.csv');
+  var gtwriter = csv.createCsvFileWriter(resourceFolder + 'gt_' + d.getDate() + '-' + (d.getMonth()+1) + '-' + d.getFullYear() +".csv");
   var updates = req.body.gtdata;
   for (var i = 0; i < updates.length; i++) {
     var record = [];

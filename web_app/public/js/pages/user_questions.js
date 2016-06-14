@@ -18,7 +18,7 @@ $(document).ready(function() {
 
     $.get( '/api/getresult',{question}, function(results) {
       var table = document.getElementById("answers");
-      
+      var paragraphs = [];
       for (var i = 0; i < results.length; i++) {
         var row = table.insertRow(-1);
         var cell0 = row.insertCell(0);
@@ -26,17 +26,20 @@ $(document).ready(function() {
         var cell2 = row.insertCell(2);
         cell0.innerHTML = results[i].title;
         cell1.innerHTML = results[i].body;
+        paragraphs.push(results[i].body);
         var cellOption = "<select id=\"answer" + i +"Options\">";
 
-        cellOption += "<option ";
-        cellOption += "value=\"" + 0 + "\">" + "not relevant";
-        cellOption += "</option>"
-        
-        for (var j = 1; j < 10; j++) {
-          cellOption += "<option ";
+        for (var j = 1; j <= 10; j++) {
+          if (j == results[i].score) {
+            cellOption += "<option selected=\"selected\" ";
+          }
+          else {
+            cellOption += "<option ";
+          }
           cellOption += "value=\"" + j + "\">" + j;
           cellOption += "</option>"
         }
+        
         cellOption += "</select>";
         cell2.innerHTML = cellOption;
         row = table.insertRow(-1);
@@ -46,7 +49,9 @@ $(document).ready(function() {
       }
 
       highlightTFs();
-      
+      $.get( '/api/getproxsearch' , {paragraphs}, function(data) {
+        createGraph(data);
+      });
       $('.submitRankingButton').click(function() {
         $.get( '/api/getgtdata',{}, function(gtdata) {  
           var labels = [];
@@ -113,16 +118,6 @@ function highlightTFs(){
     for (var i = 0; i < data.length; i++) {
       highlightAnswer(data[i]);
     }
-  });
-
-  var table = document.getElementById("answers");
-  var noRows = table.rows.length;
-  var paragraphs = [];
-  for (var i = 0; i < noRows; i++) {
-    paragraphs.push(table.rows[i].innerHTML);
-  }
-  $.get( '/api/getproxsearch' , {paragraphs}, function(data) {
-    createGraph(data);
   });
 }
 
@@ -211,6 +206,7 @@ function getUserQuestion() {
   hideError();
   id = '4';
   question = document.getElementById('userQuestion').value;
+
 
   $('._content--choose-output-format.active').removeClass('active');
   $('._content--output.active').removeClass('active');

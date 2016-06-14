@@ -15,6 +15,8 @@ $(document).ready(function() {
     generateRandomQuestion(gtdata,count);
     $.get( '/api/getresult',{question}, function(results) {
       var table = document.getElementById("answers");
+      var paragraphs = [];
+      var paragraphIDs = [];
       for (var i = 0; i < results.length; i++) {
         var row = table.insertRow(-1);
         var cell0 = row.insertCell(0);
@@ -22,14 +24,21 @@ $(document).ready(function() {
         var cell2 = row.insertCell(2);
         cell0.innerHTML = results[i].title;
         cell1.innerHTML = results[i].body;
+        paragraphIDs.push(results[i].title);
+        paragraphs.push(results[i].body);
         var cellOption = "<select id=\"answer" + i +"Options\">";
 
-        cellOption += "<option ";
-        cellOption += "value=\"" + 0 + "\">" + "not relevant";
-        cellOption += "</option>"
+        // cellOption += "<option ";
+        // cellOption += "value=\"" + 0 + "\">" + "not relevant";
+        // cellOption += "</option>"
         
-        for (var j = 1; j < 10; j++) {
-          cellOption += "<option ";
+        for (var j = 1; j <= 10; j++) {
+          if (j == results[i].score) {
+            cellOption += "<option selected=\"selected\" ";
+          }
+          else {
+            cellOption += "<option ";
+          }
           cellOption += "value=\"" + j + "\">" + j;
           cellOption += "</option>"
         }
@@ -40,8 +49,11 @@ $(document).ready(function() {
         cell1.innerHTML = "<br>";
 
       }
-      highlightTFs();
       
+      highlightTFs();
+      $.get( '/api/getproxsearch', {paragraphs,paragraphIDs}, function(data) {
+        createGraph(data);
+      });
       $('.newQuestionButton').click(function() {
         var labels = [];
         for (var i = 0; i < results.length; i++) {
@@ -100,16 +112,6 @@ $(document).ready(function() {
 });
 
 function highlightTFs() {
-  var table = document.getElementById("answers");
-  var noRows = table.rows.length;
-  var paragraphs = [];
-  for (var i = 0; i < noRows; i++) {
-    paragraphs.push(table.rows[i].innerHTML);
-  }
-  $.get( '/api/getproxsearch' , {paragraphs}, function(data) {
-    createGraph(data);
-  });
-  
   $.get( '/api/gettfs',{}, function(data) {
     data = unique(data);
     for (var i = 0; i < data.length; i++) {
