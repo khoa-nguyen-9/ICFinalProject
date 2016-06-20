@@ -219,7 +219,7 @@ function getResult(req, res) {
       ranker_id: rankers[i].ranker_id,
       question: question
     };
-    params.ranker_id = '3b140ax15-rank-2831';
+    //params.ranker_id = '3b140ax15-rank-2831';
     var results = wait.for(checkRanker,params);
     if (results != null) {
       res.send(results);
